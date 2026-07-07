@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import *
+from .models import Users
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -14,4 +14,6 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
+    
+
     

@@ -1,11 +1,14 @@
 from django.shortcuts import render
-from .seralizers import *
+from .seralizers import UserSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
 from django.conf import settings
 from django.contrib.auth import authenticate
+from rest_framework.permissions import IsAdminUser
+from .models import Users
+
 
 
 class RegisterView(APIView):
@@ -76,3 +79,27 @@ class LoginView(APIView):
             )
         return response
     
+class LogoutView(APIView):
+    def post (self, request):
+        refresh_token = request.COOKIES.get('refresh_token')
+        if not refresh_token:
+            return Response({'error':"Нету токена"}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+        except Exception as e:
+            return Response ({'error':"Неверный refresh token"}, status=status.HTTP_400_BAD_REQUEST)
+        response =  Response({'success':"Выход успешен"})
+        response.delete_cookie('refresh_token')
+        response.delete_cookie('access_token')
+        return response
+        
+                
+
+
+class AdminView(APIView):
+    permission_classes = [IsAdminUser]
+    def get(self, request):
+        users = Users.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
