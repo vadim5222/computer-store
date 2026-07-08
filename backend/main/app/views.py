@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from .seralizers import UserSerializer
 from rest_framework import status
 from rest_framework.response import Response
@@ -6,7 +5,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
 from django.conf import settings
 from django.contrib.auth import authenticate
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from .models import Users
 
 
@@ -94,7 +93,13 @@ class LogoutView(APIView):
         response.delete_cookie('access_token')
         return response
         
-                
+
+class UserProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return Response({'data':serializer.data})
+        
 
 
 class AdminView(APIView):
