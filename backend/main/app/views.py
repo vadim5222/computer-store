@@ -25,18 +25,18 @@ class RegisterView(APIView):
                 'access_token':str(refresh.access_token)
             })
             response.set_cookie(
-                'refresh_token',
-                str(refresh),
+                key = 'refresh_token',
+                value=str(refresh),
                 httponly= True,
+                samesite='Lax',
                 max_age=settings.SIMPLE_JWT.get('REFRESH_TOKEN_LIFETIME'),
-                samesite='Lax'
             )
             response.set_cookie(
-                'access_token',
-                str(refresh.access_token),
+                key = 'access_token',
+                value = str(refresh.access_token),
                 httponly= True,
-                max_age=settings.SIMPLE_JWT.get('ACCESS_TOKEN_LIFETIME'),
-                samesite='Lax'
+                samesite='Lax',
+                max_age=settings.SIMPLE_JWT.get('ACCESS_TOKEN_LIFETIME')
             )
             return response
         return Response(serializer.errors)
@@ -63,18 +63,18 @@ class LoginView(APIView):
             'access_token':str(refresh.access_token)
         })
         response.set_cookie(
-                'refresh_token',
-                str(refresh),
+                key = 'refresh_token',
+                value = str(refresh),
                 httponly= True,
-                max_age=settings.SIMPLE_JWT.get('REFRESH_TOKEN_LIFETIME'),
-                samesite='Lax'
+                samesite='Lax',
+                max_age=settings.SIMPLE_JWT.get('REFRESH_TOKEN_LIFETIME')
             )
         response.set_cookie(
-                'access_token',
-                str(refresh.access_token),
+                key = 'access_token',
+                value = str(refresh.access_token),
                 httponly= True,
-                max_age=settings.SIMPLE_JWT.get('ACCESS_TOKEN_LIFETIME'),
-                samesite='Lax'
+                samesite='Lax',
+                max_age=settings.SIMPLE_JWT.get('ACCESS_TOKEN_LIFETIME')
             )
         return response
     
