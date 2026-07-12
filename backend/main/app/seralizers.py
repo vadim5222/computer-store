@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Users
+from .models import Users, Category, Manufacturer
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -15,5 +15,15 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
     
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['title', 'created_at']
+
+
+class ManufacturerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Manufacturer
+        fields = ['title', 'description', 'created_at']
 
     

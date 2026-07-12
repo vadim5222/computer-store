@@ -1,15 +1,15 @@
-from .seralizers import UserSerializer
+from .seralizers import UserSerializer, CategorySerializer, ManufacturerSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
 from django.conf import settings
 from django.contrib.auth import authenticate
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
-from .models import Users
+from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
+from .models import Users, Category, Manufacturer
 
 
-
+# =====================логика регистрации и авторизации и выхода
 class RegisterView(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
@@ -100,6 +100,7 @@ class LogoutView(APIView):
         return response
         
 
+# логика для профиля пользователя
 class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request):
@@ -107,10 +108,35 @@ class UserProfileView(APIView):
         return Response({'data':serializer.data})
         
 
-
+# логика для админки
 class AdminView(APIView):
-    permission_classes = [IsAdminUser]
+    permission_classes = [AllowAny]
     def get(self, request):
         users = Users.objects.all()
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
+    
+# логика для создания категории продукта
+class CategoryView(APIView):
+    def get(self, request):
+        categories = Category.objects.all()
+        serializer = CategorySerializer(categories, many=True)
+        return Response(serializer.data)
+    def post(self, request):
+        serializer = CategorySerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response({'error':serializer.errors})
+    
+class ManufacturerView(APIView):
+    def get(self, request):
+        manufacturers = Manufacturer.objects.all()
+        serializer = ManufacturerSerializer(manufacturers, many=True)
+        return Response(serializer.data)
+    def post(self, request):
+        serializer = ManufacturerSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response({'error':serializer.errors})

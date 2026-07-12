@@ -8,5 +8,9 @@ urlpatterns = [
     path('refresh/', TokenRefreshView.as_view(), name='refresh'),
     path('users/', views.AdminView.as_view(), name='users'),
     path('logout/', views.LogoutView.as_view(), name='logout'),
-    path('profile/', views.UserProfileView.as_view(), name='profile')
+    path('profile/', views.UserProfileView.as_view(), name='profile'),
+    # ======url для создания категорий
+    path('category/', views.CategoryView.as_view(), name='category'),
+    # ======url для создания производителей
+    path('manufacturer/', views.ManufacturerView.as_view(), name='manufacturer')
 ]
