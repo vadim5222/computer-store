@@ -27,6 +27,7 @@ class RegisterView(APIView):
             response.set_cookie(
                 key = 'refresh_token',
                 value=str(refresh),
+                secure=False,
                 httponly= True,
                 samesite='Lax',
                 max_age=settings.SIMPLE_JWT.get('REFRESH_TOKEN_LIFETIME'),
@@ -34,6 +35,7 @@ class RegisterView(APIView):
             response.set_cookie(
                 key = 'access_token',
                 value = str(refresh.access_token),
+                secure=False,
                 httponly= True,
                 samesite='Lax',
                 max_age=settings.SIMPLE_JWT.get('ACCESS_TOKEN_LIFETIME')
@@ -65,16 +67,20 @@ class LoginView(APIView):
         response.set_cookie(
                 key = 'refresh_token',
                 value = str(refresh),
+                secure=False,
                 httponly= True,
                 samesite='Lax',
-                max_age=settings.SIMPLE_JWT.get('REFRESH_TOKEN_LIFETIME')
+                max_age=settings.SIMPLE_JWT.get('REFRESH_TOKEN_LIFETIME'),
+                path='/'
             )
         response.set_cookie(
                 key = 'access_token',
                 value = str(refresh.access_token),
+                secure=False,
                 httponly= True,
                 samesite='Lax',
-                max_age=settings.SIMPLE_JWT.get('ACCESS_TOKEN_LIFETIME')
+                max_age=settings.SIMPLE_JWT.get('ACCESS_TOKEN_LIFETIME'),
+                path='/'
             )
         return response
     
