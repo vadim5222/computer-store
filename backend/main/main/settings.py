@@ -137,10 +137,11 @@ SIMPLE_JWT = {
 }
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'app.authenticate.CookieJWTAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "app.authenticate.CookieJWTAuthentication",
     ],
 }
+
 REST_AUTH = {
     "USE_JWT": True,
     "JWT_AUTH_HTTPONLY": True,
