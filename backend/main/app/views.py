@@ -53,7 +53,7 @@ class LoginView(APIView):
             return Response({'error':'Логин и пароль обазательны'})
         user = authenticate(username = username, password=password)
         if user is None:
-            return Response({'error':'Такого пользователя не существует'})
+            return Response({'error':'Такого пользователя не существует'}, status=status.HTTP_404_NOT_FOUND)
         refresh = RefreshToken.for_user(user)
         refresh.payload.update({
             'user_id':user.id,

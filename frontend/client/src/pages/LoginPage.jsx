@@ -1,9 +1,11 @@
 import LoginForm from "../components/LoginForm"
 
-const LoginPage = () => { 
+const LoginPage = () => {
+
+
   return (
     <>
-      <LoginForm/>
+     <LoginForm /> 
     </>
   )
 }
