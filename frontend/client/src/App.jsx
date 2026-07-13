@@ -12,7 +12,7 @@ function App() {
     })
       .then(res => setUser(res.data.data))
       .catch(() => setUser(null))
-  })
+  }, [])
 
   async function logout() {
     try {
