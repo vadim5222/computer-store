@@ -10,15 +10,24 @@ function App() {
     AxiosRequest.get('api/profile/', {
       withCredentials: true
     })
-    .then(res => setUser(res.data))
-    .catch(() => setUser(null))
+      .then(res => setUser(res.data.data))
+      .catch(() => setUser(null))
   })
-  
+
+  async function logout() {
+    try {
+      const response = await AxiosRequest.post('api/logout/')
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   return (
     <>
-    <p>Привет {user?.username}</p>
+      <p>Привет {user?.username}</p>
       <Link to='/login'>Войти</Link>
       <Link to='/register'>Зарегистрироваться</Link>
+      <button onClick={logout}>Выйти</button>
     </>
   )
 }
