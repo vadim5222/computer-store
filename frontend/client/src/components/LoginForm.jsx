@@ -2,6 +2,8 @@ import {useForm} from 'react-hook-form'
 import AxiosRequest from '../utils/AxiosRequest'
 import { useNavigate } from 'react-router-dom'
 import { useState, useEffect} from 'react'
+import Input from './Input'
+import Label from './Label'
 
 const LoginForm = () => {
 
@@ -25,10 +27,26 @@ const LoginForm = () => {
     return(
         <>
         <form onSubmit={handleSubmit(loginUser)}>
-            <label htmlFor="username">username</label>
-            <input className='block w-lg h-14 mb-4 border border-gray-300 p-2.5 rounded-md' type="text" placeholder='Your username' {...register('username')}/>
-            <label htmlFor="username">password</label>
-            <input className='block w-lg h-14 mb-4 border border-gray-300 p-2.5 rounded-md' type="text" placeholder='Your password' {...register('password')}/>
+            <Label 
+            htmlFor={'username'} 
+            value={'username'}
+            />
+            <Input 
+            type={'text'} 
+            placeholder={'Your username'}
+            {...register('username')}
+            />
+            
+            <Label 
+            htmlFor={'password'}
+            value={'password'}
+            />
+            <Input 
+            type={'password'} 
+            placeholder={'Your password'}
+            {...register('password')}
+            />
+
             <div className='flex items-center gap-3'>
             <button type='submit' className='cursor-pointer bg-blue-600 text-white px-10 py-2 rounded-2xl'>Sign Up</button>
             <button className='cursor-pointer'>Forgot your password?</button>
