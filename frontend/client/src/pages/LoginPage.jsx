@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import LoginForm from "../components/LoginForm"
 
 const LoginPage = () => {
@@ -24,7 +25,7 @@ const LoginPage = () => {
                   <li>Track orders and more</li>
                 </ul>
               </nav>
-              <button className='cursor-pointer bg-blue-600 text-white px-10 py-2 rounded-2xl'>Create An Account</button>
+              <button className='cursor-pointer bg-blue-600 text-white px-10 py-2 rounded-2xl'><Link to='/register'>Create An Account</Link></button>
             </div>
           </div>
         </div>

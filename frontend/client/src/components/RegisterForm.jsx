@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form"
 import AxiosRequest from "../utils/AxiosRequest"
+import Input from "./Input"
 
 
 const RegisterForm = () => {
@@ -23,10 +24,10 @@ const RegisterForm = () => {
     return(
       <>
         <form onSubmit={handleSubmit(registerUser)}>
-          <input type="text" {...register('username')} />
-          <input type="email" {...register('email')} />
-          <input type="text" {...register('password')} />
-          <button type="submit">Зарегистрироваться</button>
+          <Input type={'text'} {...register('username')} />
+          <Input type={'email'} {...register('email')} />
+          <Input type={'password'} {...register('password')} />
+          <button className='cursor-pointer bg-blue-600 text-white px-10 py-2 rounded-2xl' type="submit">Зарегистрироваться</button>
         </form>
         </>
     )
