@@ -17,6 +17,7 @@ function App() {
   async function logout() {
     try {
       const response = await AxiosRequest.post('api/logout/')
+      setUser(null)
     } catch (e) {
       console.log(e)
     }
@@ -24,10 +25,10 @@ function App() {
 
   return (
     <>
-      <p>Привет {user?.username}</p>
+      {user && <p>Привет {user?.username}</p>}
       <Link to='/login'>Войти</Link>
       <Link to='/register'>Зарегистрироваться</Link>
-      <button onClick={logout}>Выйти</button>
+      <button className='cursor-pointer' onClick={logout}>Выйти</button>
     </>
   )
 }
