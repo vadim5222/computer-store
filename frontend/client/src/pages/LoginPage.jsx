@@ -6,7 +6,7 @@ const LoginPage = () => {
 
   return (
     <div>
-      <section className="container mx-auto mb-14">
+      <section className="container mx-auto mb-14 p-10">
         <h1 className="text-4xl mb-10 font-bold">Customer Login</h1>
         <div className="flex justify-center">
           <div className="flex items-center gap-6">

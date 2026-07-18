@@ -24,6 +24,6 @@ class CategorySerializer(serializers.ModelSerializer):
 class ManufacturerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Manufacturer
-        fields = ['title', 'description', 'created_at']
+        fields = ['title', 'description', 'image', 'created_at']
 
     

@@ -6,8 +6,7 @@ const AxiosRequest = axios.create({
     baseURL: baseUrl,
     timeout:5000,
     headers: {
-      "Accept": 'application/json',
-      "Content-Type":'application/json',
+      'Content-Type': 'multipart/form-data'
     },
     withCredentials: true
 })
