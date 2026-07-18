@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Users, Category, Manufacturer
+from .models import Users, Category, Manufacturer, Product
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -26,4 +26,17 @@ class ManufacturerSerializer(serializers.ModelSerializer):
         model = Manufacturer
         fields = ['title', 'description', 'image', 'created_at']
 
+    
+class ProductSerializer(serializers.ModelSerializer):
+    category = serializers.SlugRelatedField(
+        queryset = Category.objects.all(),
+        slug_field = 'title'
+    )
+    manufacturer = serializers.SlugRelatedField(
+        queryset = Manufacturer.objects.all(),
+        slug_field = 'title'
+    )
+    class Meta:
+        model = Product
+        fields = ['title', 'full_description', 'short_description', 'image' ,'category', 'manufacturer', 'price', 'created_at']
     

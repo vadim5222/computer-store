@@ -27,6 +27,7 @@ class Product(models.Model):
     title = models.CharField(max_length=255)
     full_description = models.TextField(verbose_name='full_descruption')
     short_description = models.TextField(verbose_name='short_description')
+    image = models.ImageField(upload_to='products/', blank=True, null=True)
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
     manufacturer = models.ForeignKey('Manufacturer', on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='price')
