@@ -1,7 +1,7 @@
 import {useForm} from 'react-hook-form'
-import AxiosRequest from '../utils/AxiosRequest' 
+import AxiosRequest from '../../utils/AxiosRequest' 
 import { useState, useEffect } from 'react'
-import Input from './Input'
+import Input from '../Input'
 
 
 const ProductForm = ({onProductAdded}) => {

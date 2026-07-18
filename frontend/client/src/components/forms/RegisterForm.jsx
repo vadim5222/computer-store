@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form"
-import AxiosRequest from "../utils/AxiosRequest"
-import Input from "./Input"
-import Label from "./Label"
+import AxiosRequest from "../../utils/AxiosRequest"
+import Input from "../Input"
+import Label from "../Label"
 import { useNavigate } from "react-router-dom"
 
 
