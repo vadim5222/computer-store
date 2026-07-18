@@ -4,11 +4,14 @@ import { useNavigate } from 'react-router-dom'
 import { useState, useEffect} from 'react'
 import Input from './Input'
 import Label from './Label'
+import useAuthStore from '../store/AuthStore'
 
 const LoginForm = () => {
 
     const {register, handleSubmit} = useForm()
     const navigate = useNavigate()
+    const {fetchUser} = useAuthStore()
+
 
     const loginUser = async(data) => {
         try{
@@ -17,6 +20,7 @@ const LoginForm = () => {
                 password:data.password
             })
         console.log('Вход успешный',response)
+        await fetchUser()
         navigate('/')
         }catch(e){
             console.log(e)
