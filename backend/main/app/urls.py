@@ -14,7 +14,9 @@ urlpatterns = [
     # ======url для создания категорий
     path('category/', views.CategoryView.as_view(), name='category'),
     # ======url для создания производителей
-    path('manufacturer/', views.ManufacturerView.as_view(), name='manufacturer')
+    path('manufacturer/', views.ManufacturerView.as_view(), name='manufacturer'),
+    # ====url для управлением продуктами
+    path('products/', views.ProductView.as_view(), name='products')
 ]
 
 

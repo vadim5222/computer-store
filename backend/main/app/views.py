@@ -1,4 +1,4 @@
-from .seralizers import UserSerializer, CategorySerializer, ManufacturerSerializer
+from .seralizers import UserSerializer, CategorySerializer, ManufacturerSerializer, ProductSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from django.conf import settings
 from django.contrib.auth import authenticate
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
-from .models import Users, Category, Manufacturer
+from .models import Users, Category, Manufacturer, Product
 from rest_framework.parsers import MultiPartParser, FormParser
 
 
@@ -148,3 +148,19 @@ class ManufacturerView(APIView):
             serializer.save()
             return Response({"data":serializer.data}, status=status.HTTP_201_CREATED)
         return Response({'error':serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+    
+
+# Логика просмотра и создания продуктов
+class ProductView(APIView):
+    parser_classes = [MultiPartParser, FormParser]
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        products = Product.objects.all()
+        serializer = ProductSerializer(products, many=True)
+        return Response({"data":serializer.data}, status=status.HTTP_200_OK)
+    def post(self, request):
+        serializer = ProductSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'data': serializer.data}, status=status.HTTP_201_CREATED)
+        return Response({'error': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
