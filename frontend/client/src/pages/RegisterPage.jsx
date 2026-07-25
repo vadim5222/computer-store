@@ -9,13 +9,13 @@ const RegisterPage = () => {
           <h1 className="text-4xl mb-10 font-bold">Customer register</h1>
           <div className="flex justify-center">
             <div className="flex items-center gap-6">
-              <div className="bg-blue-50 p-16">
+              <div className="bg-blue-50 p-8 pr-16">
                 <h1 className="font-bold mb-3">Registered Customers</h1>
                 <RegisterForm />
               </div>
-              <div className="bg-blue-50 pl-14 pt-28 pb-48 pr-72">
+              <div className="bg-blue-50 pl-14 pt-28 pb-72 pr-56">
                 <h1 className="font-bold text-2xl mb-7">Already have an account?</h1>
-                <nav className="mb-7">
+                <nav className="mb-14 text-xl">
                   <ul>
                     <li>Sign in to your account to enjoy faster checkout</li>
                     <li>Manage your addresses</li>

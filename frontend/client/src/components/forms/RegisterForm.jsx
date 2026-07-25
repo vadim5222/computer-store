@@ -13,6 +13,8 @@ const RegisterForm = () => {
   const registerUser = async (data) => { 
     try {
       const response = await AxiosRequest.post('api/register/', {
+        first_name: data.first_name,
+        last_name:data.last_name,
         username: data.username,
         email: data.email,
         password:data.password
@@ -28,6 +30,12 @@ const RegisterForm = () => {
     return(
       <>
         <form onSubmit={handleSubmit(registerUser)}>
+          <Label htmlFor={'first_name'} value={'First name'}/>
+          <Input type={'text'} placeholder={'your name'} {...register('first_name')} />
+          
+          <Label htmlFor={'last_name'} value={'Last name'}/>
+          <Input type={'text'} placeholder={'your last name'} {...register('last_name')} />
+
           <Label htmlFor={'username'} value={'Username'}/>
           <Input type={'text'} placeholder={'Your username'} {...register('username')} />
 
