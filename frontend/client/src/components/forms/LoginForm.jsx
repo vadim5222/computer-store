@@ -2,8 +2,8 @@ import {useForm} from 'react-hook-form'
 import AxiosRequest from '../../utils/AxiosRequest'
 import { useNavigate } from 'react-router-dom'
 import { useState, useEffect} from 'react'
-import Input from '../Input'
-import Label from '../Label'
+import Input from '../ui/Input'
+import Label from '../ui/Label'
 import useAuthStore from '../../store/AuthStore'
 
 const LoginForm = () => {

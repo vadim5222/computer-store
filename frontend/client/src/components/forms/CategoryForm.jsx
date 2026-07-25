@@ -1,8 +1,7 @@
 import { useForm } from "react-hook-form"
 import AxiosRequest from "../../utils/AxiosRequest"
-import Label from "../Label"
-import Input from "../Input"
-import { useEffect } from "react"
+import Label from "../ui/Label"
+import Input from "../ui/Input"
 
 const CategoryForm = ({onCategoryAdded}) => {
 
@@ -22,9 +21,6 @@ const CategoryForm = ({onCategoryAdded}) => {
             console.log(e)
         }
     }
-
-    
-
 
     return(
         <>

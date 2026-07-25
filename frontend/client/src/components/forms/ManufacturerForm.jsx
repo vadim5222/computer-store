@@ -1,7 +1,7 @@
 import {useForm} from 'react-hook-form'
 import AxiosRequest from '../../utils/AxiosRequest'
-import Label from '../Label'
-import Input from '../Input'
+import Label from '../ui/Label'
+import Input from '../ui/Input'
 import { useState } from 'react'
 
 

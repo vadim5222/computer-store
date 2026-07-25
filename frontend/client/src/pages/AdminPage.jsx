@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react"
-import CategoryForm from "../components/CategoryForm"
+import CategoryForm from "../components/forms/CategoryForm"
 import AxiosRequest from "../utils/AxiosRequest"
-import ManufacturerForm from "../components/ManufacturerForm"
-import ProductForm from "../components/ProductForm"
+import ManufacturerForm from "../components/forms/ManufacturerForm"
+import ProductForm from "../components/forms/ProductForm"
+import ProductCard from "../components/ui/ProductCard"
 
 
 const AdminPage = () => {
@@ -10,8 +11,8 @@ const AdminPage = () => {
     const [viewCategoryForm, setViewCategoryForm] = useState(false)
     const [viewManufacturerForm, setViewManufacturerForm] = useState(false)
     const [viewProductForm, setViewProductForm] = useState(false)
-    
-    
+
+
     // состояния для отображений
     const [viewCategories, setViewCategories] = useState(false)
     const [viewManufacturers, setViewManufacturers] = useState(false)
@@ -35,8 +36,8 @@ const AdminPage = () => {
 
     const manufacturerAdded = () => {
         AxiosRequest.get('api/manufacturer/')
-        .then(res => setManufacturers(res.data.data))
-        .catch(() => setManufacturers([]))
+            .then(res => setManufacturers(res.data.data))
+            .catch(() => setManufacturers([]))
     }
 
     useEffect(() => {
@@ -46,8 +47,8 @@ const AdminPage = () => {
 
     const productsAdded = () => {
         AxiosRequest.get('api/products/')
-        .then(res => setProducts(res.data.data))
-        .catch(() => setProducts([]))
+            .then(res => setProducts(res.data.data))
+            .catch(() => setProducts([]))
     }
 
     useEffect(() => {
@@ -63,11 +64,12 @@ const AdminPage = () => {
 
             <button className="cursor-pointer" onClick={() => setViewCategories(!viewCategories)}>Показать существущие категории</button>
             <button className="cursor-pointer" onClick={() => setViewManufacturers(!viewManufacturers)}>Показать существущих производителей</button>
-            
+            <button className="cursor-pointer" onClick={() => setViewProducts(!viewProducts)}>Показать сущесвующие продукты</button>
+
             {viewCategoryForm && <CategoryForm onCategoryAdded={categoryAdded} />}
             {viewManufacturerForm && <ManufacturerForm onManufacturerAdded={manufacturerAdded} />}
-            {viewProductForm && <ProductForm onProductAdded={productsAdded}/>}
-            
+            {viewProductForm && <ProductForm onProductAdded={productsAdded} />}
+
             {viewCategories && <div>
                 {categories.map(category => (
                     <p key={category.title}>{category.title}</p>
@@ -78,9 +80,22 @@ const AdminPage = () => {
                     <div key={manufacturer.title}>
                         <p>{manufacturer.title}</p>
                         <p>{manufacturer.description}</p>
+                        {manufacturer.image && <img src={manufacturer.image} alt="avatar" />}
                     </div>
                 ))}
-                </div>}
+            </div>}
+            {viewProducts && <div className="flex items-center gap-14">
+                {products.map(product => (
+                    <ProductCard key={product.id}
+                        title={product.title}
+                        full_description={product.full_description}
+                        short_description={product.short_description}
+                        category={product.category}
+                        manufacturer={product.manufacturer}
+                        price={product.price}
+                    />
+                ))}
+            </div>}
         </div>
     )
 }

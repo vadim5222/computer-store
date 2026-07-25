@@ -2,7 +2,7 @@ import { create } from "zustand";
 import AxiosRequest from "../utils/AxiosRequest";
 
 const useAuthStore = create((set) => ({
-    user: null,
+  user: null,
 
     fetchUser: async () => {
         try{
@@ -13,10 +13,10 @@ const useAuthStore = create((set) => ({
         }
     },
 
-    logout: async () => {
+  logout: async () => {
         try{
             await AxiosRequest.post('api/logout/')
-            set({user:null})
+          set({ user: null })
         }catch(error){
             console.error('Ошибка выхода:', error)
         }
