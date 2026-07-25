@@ -16,7 +16,9 @@ urlpatterns = [
     # ======url для создания производителей
     path('manufacturer/', views.ManufacturerView.as_view(), name='manufacturer'),
     # ====url для управлением продуктами
-    path('products/', views.ProductView.as_view(), name='products')
+    path('products/', views.ProductView.as_view(), name='products'),
+    # ====utl для обновления профиля пользователя
+    path('update/<int:pk>/', views.UserProfileView.as_view(), name='update')
 ]
 
 

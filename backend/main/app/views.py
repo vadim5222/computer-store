@@ -1,4 +1,4 @@
-from .seralizers import UserSerializer, CategorySerializer, ManufacturerSerializer, ProductSerializer
+from .seralizers import UserSerializer, CategorySerializer, ManufacturerSerializer, ProductSerializer, ReviewSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from django.conf import settings
 from django.contrib.auth import authenticate
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
-from .models import Users, Category, Manufacturer, Product
+from .models import Users, Category, Manufacturer, Product, Review
 from rest_framework.parsers import MultiPartParser, FormParser
 
 
@@ -107,8 +107,15 @@ class UserProfileView(APIView):
     def get(self, request):
         serializer = UserSerializer(request.user)
         return Response({'data':serializer.data})
+    def patch(self, request, pk):
+        user = Users.objects.get(pk=pk)
+        serializer = UserSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'data':serializer.data}, status=status.HTTP_200_OK)
+        return Response({'error':serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
         
-
+1
 # логика для админки
 class AdminView(APIView):
     permission_classes = [IsAdminUser]
@@ -164,3 +171,16 @@ class ProductView(APIView):
             serializer.save()
             return Response({'data': serializer.data}, status=status.HTTP_201_CREATED)
         return Response({'error': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+# Логика просмиотра и создания отзывов
+class ReviewView(APIView):
+    def post(self, request):
+        serializer = ReviewSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'data':serializer.data}, status=status.HTTP_201_CREATED)
+        return Response({'error':serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+    def get(self, request):
+        reviews = Review.objects.all()
+        serializer = ReviewSerializer(reviews, many=True)
+        return Response({'data':serializer.data}, status=status.HTTP_200_OK)

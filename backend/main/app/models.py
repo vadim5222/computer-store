@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import MaxValueValidator, MinValueValidator
+
 
 class Users(AbstractUser):
     email = models.EmailField()
@@ -45,4 +47,13 @@ class Order(models.Model):
 
     def __str__(self):
         return f'{self.user - self.created_at}'
-    
+
+
+class Review(models.Model):
+    user = models.ForeignKey('Users', on_delete=models.CASCADE)
+    text = models.TextField()
+    score = models.PositiveIntegerField(validators=[MaxValueValidator(5), MinValueValidator(1)])
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user
