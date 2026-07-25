@@ -22,8 +22,10 @@ const MainTab = () => {
                 <div className='flex gap-10'>
                     <img className="w-44 rounded-md" src="/avatar.png" alt="avatar" />
                     <div>
-                        <p>{user?.username}</p>
-                        <p>{user?.email}</p>
+                      <p>{user?.first_name}</p>
+                      <p>{user?.last_name}</p>
+                      <p>{user?.username}</p>
+                      <p>{user?.email}</p>
                     </div>
                 </div>
                 <button className='flex items-center gap-5 border p-2 rounded-md cursor-pointer'>
