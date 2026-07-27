@@ -11,7 +11,7 @@ const ProfileUpdateForm = ({ userId }) => {
         AxiosRequest.get('api/profile/')
         .then(res => reset(res.data.data))
         .catch((err) => console.log('Ошибка загрузки:', err))
-    }, [reset])
+    }, [])
 
 
     const updateUser = async (data) => {
@@ -54,7 +54,7 @@ const ProfileUpdateForm = ({ userId }) => {
                 <Input {...register('phone')} placeholder={'Ваш номер телефона'}/>
                 <Input {...register('address')} placeholder={'Ваш адрес проживания'}/>
                 <Input {...register('email')} placeholder={'Ваш email'}/>
-                <button type="submit">Сохранить</button>
+                <button className="bg-blue-600 px-8 py-2.5 rounded-md text-white" type="submit">Сохранить</button>
             </form>
         </>
     )

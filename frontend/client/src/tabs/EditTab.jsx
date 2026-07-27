@@ -10,18 +10,18 @@ const EditTab = () => {
     const [user, setUser] = useState(null)
     useEffect(() => {
         AxiosRequest.get('api/profile/')
-        .then(res => setUser(res.data.data))
-        .catch(() => setUser(null))
-    })
-    return(
+            .then(res => setUser(res.data.data))
+            .catch(() => setUser(null))
+    }, [])
+    return (
         <>
-        <button>
-            <Link to='/profile/'>
-            <BsFillCaretLeftFill/>
-            </Link>
-        </button>
-        <p>редактирование</p>
-        <ProfileUpdateForm userId={user?.id}/>
+            <button className="flex items-center cursor-pointer">
+                <Link to='/profile/'>
+                    <BsFillCaretLeftFill />
+                </Link>
+                <p>редактирование</p>
+            </button>
+            <ProfileUpdateForm userId={user?.id} />
         </>
     )
 }

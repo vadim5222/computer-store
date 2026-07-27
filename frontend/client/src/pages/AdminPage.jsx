@@ -4,6 +4,8 @@ import AxiosRequest from "../utils/AxiosRequest"
 import ManufacturerForm from "../components/forms/ManufacturerForm"
 import ProductForm from "../components/forms/ProductForm"
 import ProductCard from "../components/ui/ProductCard"
+import { IoIosAdd } from "react-icons/io";
+
 
 
 const AdminPage = () => {
@@ -12,11 +14,6 @@ const AdminPage = () => {
     const [viewManufacturerForm, setViewManufacturerForm] = useState(false)
     const [viewProductForm, setViewProductForm] = useState(false)
 
-
-    // состояния для отображений
-    const [viewCategories, setViewCategories] = useState(false)
-    const [viewManufacturers, setViewManufacturers] = useState(false)
-    const [viewProducts, setViewProducts] = useState(false)
 
     // состояния для получения
     const [categories, setCategories] = useState([])
@@ -56,46 +53,112 @@ const AdminPage = () => {
     }, [])
 
     return (
-        <div>
-            <button className="cursor-pointer" onClick={() => setViewCategoryForm(!viewCategoryForm)}>Добавить категорию</button>
-            <button className="cursor-pointer" onClick={() => setViewManufacturerForm(!viewManufacturerForm)}>Добавить производителя</button>
-            <button className="cursor-pointer" onClick={() => setViewProductForm(!viewProductForm)}>Добавить продукт</button>
-
-
-            <button className="cursor-pointer" onClick={() => setViewCategories(!viewCategories)}>Показать существущие категории</button>
-            <button className="cursor-pointer" onClick={() => setViewManufacturers(!viewManufacturers)}>Показать существущих производителей</button>
-            <button className="cursor-pointer" onClick={() => setViewProducts(!viewProducts)}>Показать сущесвующие продукты</button>
-
-            {viewCategoryForm && <CategoryForm onCategoryAdded={categoryAdded} />}
+        <div className="container mx-auto">
             {viewManufacturerForm && <ManufacturerForm onManufacturerAdded={manufacturerAdded} />}
             {viewProductForm && <ProductForm onProductAdded={productsAdded} />}
-
-            {viewCategories && <div>
-                {categories.map(category => (
-                    <p key={category.title}>{category.title}</p>
-                ))}
-            </div>}
-            {viewManufacturers && <div>
-                {manufacturers.map(manufacturer => (
-                    <div key={manufacturer.title}>
-                        <p>{manufacturer.title}</p>
-                        <p>{manufacturer.description}</p>
-                        {manufacturer.image && <img src={manufacturer.image} alt="avatar" />}
+            <div className="flex items-center flex-wrap justify-between">
+                <div className="shadow-xl p-4">
+                    <div className="flex items-center justify-between">
+                        <h1 className="text-xl">Категории</h1>
+                        <button className="cursor-pointer bg-blue-600 flex items-center text-white p-2 gap-3 rounded-md" onClick={() => setViewCategoryForm(!viewCategoryForm)}>
+                            <IoIosAdd />
+                            <p>Добавить категорию</p>
+                        </button>
                     </div>
-                ))}
-            </div>}
-            {viewProducts && <div className="flex items-center gap-14">
-                {products.map(product => (
-                    <ProductCard key={product.id}
-                        title={product.title}
-                        full_description={product.full_description}
-                        short_description={product.short_description}
-                        category={product.category}
-                        manufacturer={product.manufacturer}
-                        price={product.price}
-                    />
-                ))}
-            </div>}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th className="px-6 py-4">Название</th>
+                                <th className="px-6 py-4">Количество товаров</th>
+                                <th className="px-6 py-4">Действие</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {categories.map(category => (
+                                <tr key={category.title}>
+                                    <td className="px-6 py-4">{category.title}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    {viewCategoryForm && <CategoryForm onCategoryAdded={categoryAdded} />}
+                </div>
+
+                <div className="shadow-xl p-4">
+                    <div className="flex items-center justify-between">
+                        <h1 className="text-xl">Производители</h1>
+                        <button className="cursor-pointer flex items-center p-2 gap-3 bg-blue-600 text-white rounded-md" onClick={() => setViewManufacturerForm(!viewManufacturerForm)}>
+                            <IoIosAdd />
+                            Добавить производителя
+                        </button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th className="px-6 py-4">Название</th>
+                                <th className="px-6 py-4">Описание</th>
+                                <th className="px-6 py-4">Количество товаров</th>
+                                <th className="px-6 py-4">Действие</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {manufacturers.map(manufacturer => (
+                                <tr key={manufacturer.title}>
+                                    <td className="px-6 py-4">
+                                        <div className="flex items-center gap-6">
+                                            <img src={manufacturer.image} alt="avatar" />
+                                            <p>
+                                                {manufacturer.title}
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td className="px-6 py-4">{manufacturer.description}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div className="shadow-xl p-4">
+                    <div className="flex items-center justify-between">
+                        <h1 className="text-xl">Товары</h1>
+                        <button className="cursor-pointer flex items-center p-2 gap-3 bg-blue-600 text-white rounded-md" onClick={() => setViewProductForm(!viewProductForm)}>
+                            <IoIosAdd />
+                            Добавить продукт
+                        </button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th className="px-6 py-4">Название</th>
+                                <th className="px-6 py-4">Полное описание</th>
+                                <th className="px-6 py-4">Краткое описание</th>
+                                <th className="px-6 py-4">Категория</th>
+                                <th className="px-6 py-4">Производитель</th>
+                                <th className="px-6 py-4">Цена</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {products.map(product => (
+                                <tr key={product.title}>
+                                    <td className="px-6 py-4">
+                                        <div className="flex items-center gap-6">
+                                            <img src={product.image} alt="avatar" />
+                                            <p>{product.title}</p>
+                                        </div>
+                                    </td>
+                                    <td className="px-6 py-4">{product.full_description}</td>
+                                    <td className="px-6 py-4">{product.short_description}</td>
+                                    <td className="px-6 py-4">{product.category}</td>
+                                    <td className="px-6 py-4">{product.manufacturer}</td>
+                                    <td className="px-6 py-4">{product.price}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
     )
 }

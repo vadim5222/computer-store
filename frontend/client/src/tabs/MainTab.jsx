@@ -42,7 +42,7 @@ const MainTab = () => {
                         </tr>
                         <tr>
                             <th className='p-2'>Ваше имя пользователя</th>
-                            <th>{user?.first_name}</th>
+                            <th>{user?.username}</th>
                         </tr>
                         <tr>
                             <th className='p-2'>Ваше номер телефона</th>
@@ -58,7 +58,7 @@ const MainTab = () => {
                         </tr>
                     </tbody>
                 </table>
-                <button className='flex items-center gap-5 border p-2 rounded-md cursor-pointer'>
+                <button className='flex items-center gap-5 border p-2 rounded-md cursor-pointer bg-blue-600 text-white'>
                     <BsFillBrushFill />
                     <Link to='/profile/main/edit'>Редактировать профиль</Link>
                 </button>
