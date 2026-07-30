@@ -13,11 +13,18 @@ const Catalog = () => {
     }, [])
 
     return (
-        <>
-            <h1>Каталог товаров</h1>
+        <div className="container mx-auto">
+            <h1 className="font-bold text-3xl">Каталог товаров</h1>
+            <div>
+                <button>
+                    
+                </button>
+            </div>
+
             <div className="flex items-center gap-16">
                 {products.map(product => (
                     <ProductCard key={product.id}
+                        image={product.image}
                         title={product.title}
                         full_description={product.full_description}
                         short_description={product.short_description}
@@ -27,7 +34,7 @@ const Catalog = () => {
                     />
                 ))}
             </div>
-        </>
+        </div>
     )
 }
 
