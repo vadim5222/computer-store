@@ -27,20 +27,13 @@ const AdminPage = () => {
             .then(res => setCategories(res.data.data))
             .catch(() => setCategories([]))
     }
-    useEffect(() => {
-        categoryAdded()
-    }, [])
+
 
     const manufacturerAdded = () => {
         AxiosRequest.get('api/manufacturer/')
             .then(res => setManufacturers(res.data.data))
             .catch(() => setManufacturers([]))
     }
-
-    useEffect(() => {
-        manufacturerAdded()
-    }, [])
-
 
     const productsAdded = () => {
         AxiosRequest.get('api/products/')
@@ -49,6 +42,8 @@ const AdminPage = () => {
     }
 
     useEffect(() => {
+        categoryAdded()
+        manufacturerAdded()
         productsAdded()
     }, [])
 
@@ -56,8 +51,10 @@ const AdminPage = () => {
         <div className="container mx-auto">
             {viewManufacturerForm && <ManufacturerForm onManufacturerAdded={manufacturerAdded} />}
             {viewProductForm && <ProductForm onProductAdded={productsAdded} />}
-            <div className="flex items-center flex-wrap justify-between">
-                <div className="shadow-xl p-4">
+
+
+            <div className="grid grid-cols-2">
+                <div className="shadow-xl p-4 col-span-1">
                     <div className="flex items-center justify-between">
                         <h1 className="text-xl">Категории</h1>
                         <button className="cursor-pointer bg-blue-600 flex items-center text-white p-2 gap-3 rounded-md" onClick={() => setViewCategoryForm(!viewCategoryForm)}>
@@ -75,7 +72,7 @@ const AdminPage = () => {
                         </thead>
                         <tbody>
                             {categories.map(category => (
-                                <tr key={category.title}>
+                                <tr key={category.id}>
                                     <td className="px-6 py-4">{category.title}</td>
                                 </tr>
                             ))}
@@ -84,7 +81,7 @@ const AdminPage = () => {
                     {viewCategoryForm && <CategoryForm onCategoryAdded={categoryAdded} />}
                 </div>
 
-                <div className="shadow-xl p-4">
+                <div className="shadow-xl p-4 col-span-1">
                     <div className="flex items-center justify-between">
                         <h1 className="text-xl">Производители</h1>
                         <button className="cursor-pointer flex items-center p-2 gap-3 bg-blue-600 text-white rounded-md" onClick={() => setViewManufacturerForm(!viewManufacturerForm)}>
@@ -103,7 +100,7 @@ const AdminPage = () => {
                         </thead>
                         <tbody>
                             {manufacturers.map(manufacturer => (
-                                <tr key={manufacturer.title}>
+                                <tr key={manufacturer.id}>
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-6">
                                             <img src={manufacturer.image} alt="avatar" />
@@ -119,7 +116,7 @@ const AdminPage = () => {
                     </table>
                 </div>
 
-                <div className="shadow-xl p-4">
+                <div className="shadow-xl p-4 col-span-2">
                     <div className="flex items-center justify-between">
                         <h1 className="text-xl">Товары</h1>
                         <button className="cursor-pointer flex items-center p-2 gap-3 bg-blue-600 text-white rounded-md" onClick={() => setViewProductForm(!viewProductForm)}>
