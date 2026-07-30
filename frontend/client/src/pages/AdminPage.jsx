@@ -77,6 +77,7 @@ const AdminPage = () => {
                             {categories.map(category => (
                                 <tr key={category.title}>
                                     <td className="px-6 py-4">{category.title}</td>
+                                    <td className="px-6 py-4">{categories.length}</td>
                                 </tr>
                             ))}
                         </tbody>
@@ -113,6 +114,7 @@ const AdminPage = () => {
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">{manufacturer.description}</td>
+                                    <td className="px-6 py-4">{manufacturers.length}</td>
                                 </tr>
                             ))}
                         </tbody>
