@@ -5,9 +5,11 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.views import APIView
 from django.conf import settings
 from django.contrib.auth import authenticate
-from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from .models import Users, Category, Manufacturer, Product, Review
 from rest_framework.parsers import MultiPartParser, FormParser
+
+from rest_framework_simplejwt.views import TokenRefreshView
 
 
 # =====================логика регистрации и авторизации и выхода
@@ -99,7 +101,33 @@ class LogoutView(APIView):
         response.delete_cookie('refresh_token')
         response.delete_cookie('access_token')
         return response
-        
+
+
+
+class CustomRefreshTokenView(TokenRefreshView):
+    def post(self, request, *args, **kwargs):
+        refresh_token = request.COOKIES.get('refresh_token')
+        if not refresh_token:
+            return Response({'error':'Refresh token отсутствует'}, status=status.HTTP_400_BAD_REQUEST)
+        mutated_data = dict(request.data)
+        mutated_data['refresh'] = refresh_token
+        request._full_data = mutated_data
+        response = super().post(request, *args, **kwargs)
+
+        if response.status_code == 200:
+            new_access_token = response.data.get('access_token')
+            if new_access_token:
+                response.set_cookie(
+                    key='access_token',
+                    value=str(new_access_token),
+                    secure=False,  
+                    httponly=True, 
+                    samesite='Lax',
+                    max_age=settings.SIMPLE_JWT.get('ACCESS_TOKEN_LIFETIME'),
+                    path='/'
+                )
+        return response
+
 
 # логика для профиля пользователя
 class UserProfileView(APIView):
@@ -145,10 +173,12 @@ class CategoryView(APIView):
 # логина создания производителей 
 class ManufacturerView(APIView):
     parser_classes = [MultiPartParser, FormParser]
+
     def get(self, request):
         manufacturers = Manufacturer.objects.all()
         serializer = ManufacturerSerializer(manufacturers, many=True)
         return Response({'data':serializer.data})
+    
     def post(self, request):
         serializer = ManufacturerSerializer(data = request.data)
         if serializer.is_valid():
