@@ -17,31 +17,23 @@ AxiosRequest.interceptors.request.use((config) => {
 })
 
 
-AxiosRequest.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const originalRequest = error.config
-
-    if (error.response?.status === 401 && originalRequest && !originalRequest._isRetry){
-      originalRequest._isRetry = true
-
-      try{
-        const response = await axios.post(`${baseUrl}api/refresh/`, {}, {
-          withCredentials: true
-        })
-        const newAccessToken = response.data.access_token
-        if (newAccessToken){
-          localStorage.setItem('token', newAccessToken)
-          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
-        }
-        return AxiosRequest.request(originalRequest)
-      }catch(e){
-        console.log('Не авторизован')
-        return Promise.reject(e)
-      }
+AxiosRequest.interceptors.response.use((config) => {
+  return config
+}, async (error) => {
+  const originalRequest = error.config
+  if (error.response?.status === 401 && !originalRequest._isRetry) {
+    originalRequest._isRetry = true
+    try{
+      const response = await axios.post(`${baseUrl}api/refresh/`, {}, {
+        withCredentials: true
+      })
+      console.log(response)
+      return AxiosRequest(originalRequest)
+    }catch(e){
+      return Promise.reject(e)
     }
-    return Promise.reject(error)
   }
-)
+  return Promise.reject(error)
+})
 
 export default AxiosRequest
