@@ -8,8 +8,9 @@ from django.contrib.auth import authenticate
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from .models import Users, Category, Manufacturer, Product, Review
 from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework_simplejwt.exceptions import TokenError
 
-from rest_framework_simplejwt.views import TokenRefreshView
+
 
 
 # =====================логика регистрации и авторизации и выхода
@@ -46,6 +47,40 @@ class RegisterView(APIView):
             return response
         return Response(serializer.errors)
 
+
+class CustomRefreshView(APIView):
+    def post (self, request):
+        refresh_token = request.COOKIES.get('refresh_token')
+
+        if not refresh_token:
+            return Response({
+                'error':'Refresh token отсутствует'
+            }, status=status.HTTP_401_UNAUTHORIZED
+        )
+
+        try:
+            refresh = RefreshToken(refresh_token)
+            access_token = str(refresh.access_token)
+            response = Response({
+                'success': 'Токен успешно обновлен'
+            }, status=status.HTTP_200_OK)
+            
+            response.set_cookie(
+                key='access_token',
+                value=access_token,
+                secure=False,  
+                httponly=True,
+                samesite='Lax',
+                max_age=settings.SIMPLE_JWT.get('ACCESS_TOKEN_LIFETIME'),
+                path='/'
+            )
+            
+            return response
+
+        except TokenError:
+            return Response({
+                'error':'Неправильный или просроченный токен'
+            }, status=status.HTTP_401_UNAUTHORIZED)
 
 class LoginView(APIView):
     def post(self, request):
@@ -104,29 +139,7 @@ class LogoutView(APIView):
 
 
 
-class CustomRefreshTokenView(TokenRefreshView):
-    def post(self, request, *args, **kwargs):
-        refresh_token = request.COOKIES.get('refresh_token')
-        if not refresh_token:
-            return Response({'error':'Refresh token отсутствует'}, status=status.HTTP_400_BAD_REQUEST)
-        mutated_data = dict(request.data)
-        mutated_data['refresh'] = refresh_token
-        request._full_data = mutated_data
-        response = super().post(request, *args, **kwargs)
 
-        if response.status_code == 200:
-            new_access_token = response.data.get('access_token')
-            if new_access_token:
-                response.set_cookie(
-                    key='access_token',
-                    value=str(new_access_token),
-                    secure=False,  
-                    httponly=True, 
-                    samesite='Lax',
-                    max_age=settings.SIMPLE_JWT.get('ACCESS_TOKEN_LIFETIME'),
-                    path='/'
-                )
-        return response
 
 
 # логика для профиля пользователя

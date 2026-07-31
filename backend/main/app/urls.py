@@ -1,13 +1,12 @@
 from django.urls import path
 from . import views
-from .views import CustomRefreshTokenView
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('register/', views.RegisterView.as_view(), name='register'),
     path('login/', views.LoginView.as_view(), name='login'),
-    path('refresh/', CustomRefreshTokenView.as_view(), name='refresh'),
+    path('refresh/', views.CustomRefreshView.as_view(), name='refresh'),
     path('users/', views.AdminView.as_view(), name='users'),
     path('logout/', views.LogoutView.as_view(), name='logout'),
     path('profile/', views.UserProfileView.as_view(), name='profile'),
