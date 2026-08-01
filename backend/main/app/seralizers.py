@@ -3,9 +3,17 @@ from .models import Users, Category, Manufacturer, Product, Review
 
 
 class UserSerializer(serializers.ModelSerializer):
+    password1 = serializers.CharField(write_only = True)
+    password2 = serializers.CharField(write_only = True)
     class Meta:
         model = Users
-        fields = '__all__'
+        fields = ['first_name', 'last_name', 'username', 'email', 'phone', 'address', 'password1', 'password2']
+
+    def validate(self, attrs):
+        if attrs['password1'] != attrs['password2']:
+            raise serializers.ValidationError('Passwords do not match')
+        return attrs
+    
     def create(self, validated_data):
         user = Users(
             first_name = validated_data['first_name'],
@@ -15,7 +23,7 @@ class UserSerializer(serializers.ModelSerializer):
             phone = validated_data['phone'],
             address = validated_data['address'],
         )
-        user.set_password(validated_data['password'])
+        user.set_password(validated_data['password1'])
         user.save()
         return user
     

@@ -19,7 +19,8 @@ const RegisterForm = () => {
         phone: data.phone,
         address: data.address,
         email: data.email,
-        password: data.password
+        password1: data.password1,
+        password2: data.password2
       })
       console.log(response)
       navigate('/login')
@@ -50,8 +51,11 @@ const RegisterForm = () => {
         <Label htmlFor={'email'} value={'Email'} />
         <Input type={'email'} placeholder={'Your email'} {...register('email')} />
 
-        <Label htmlFor={'password'} value={'password'} />
-        <Input type={'password'} placeholder={'Your password'} {...register('password')} />
+        <Label htmlFor={'password1'} value={'password1'} />
+        <Input type={'password'} placeholder={'Your password'} {...register('password1')} />        
+        
+        <Label htmlFor={'password2'} value={'password2'} />
+        <Input type={'password'} placeholder={'Please repit your password'} {...register('password2')} />
 
         <button className='cursor-pointer bg-blue-600 text-white px-10 py-2 rounded-2xl' type="submit">Зарегистрироваться</button>
       </form>
