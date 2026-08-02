@@ -9,6 +9,8 @@ from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from .models import Users, Category, Manufacturer, Product, Review
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework_simplejwt.exceptions import TokenError
+from django_filters.rest_framework import DjangoFilterBackend
+from .service import ProductFilter
 
 
 
@@ -74,9 +76,7 @@ class CustomRefreshView(APIView):
                 max_age=settings.SIMPLE_JWT.get('ACCESS_TOKEN_LIFETIME'),
                 path='/'
             )
-            
             return response
-
         except TokenError:
             return Response({
                 'error':'Неправильный или просроченный токен'
@@ -204,6 +204,9 @@ class ManufacturerView(APIView):
 class ProductView(APIView):
     parser_classes = [MultiPartParser, FormParser]
     permission_classes = [IsAuthenticated]
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = ProductFilter
+
     def get(self, request):
         products = Product.objects.all()
         serializer = ProductSerializer(products, many=True)
