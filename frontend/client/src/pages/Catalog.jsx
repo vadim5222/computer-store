@@ -8,7 +8,7 @@ const Catalog = () => {
 
     useEffect(() => {
         AxiosRequest.get('api/products/')
-            .then(res => setProducts(res.data.data))
+            .then(res => setProducts(res.data))
             .catch(() => setProducts([]))
     }, [])
 
@@ -21,9 +21,9 @@ const Catalog = () => {
                 </button>
             </div>
 
-            <div className="flex items-center gap-16">
+            <div className="flex items-center gap-16 flex-wrap">
                 {products.map(product => (
-                    <ProductCard key={product.id}
+                    <ProductCard key={product.title}
                         image={product.image}
                         title={product.title}
                         full_description={product.full_description}

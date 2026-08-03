@@ -7,7 +7,7 @@ class UserSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only = True)
     class Meta:
         model = Users
-        fields = ['first_name', 'last_name', 'username', 'email', 'phone', 'address', 'password1', 'password2']
+        fields = ['id','first_name', 'last_name', 'username', 'email', 'phone', 'address', 'password1', 'password2']
 
     def validate(self, attrs):
         if attrs['password1'] != attrs['password2']:
@@ -26,6 +26,12 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password1'])
         user.save()
         return user
+
+
+class CustomUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Users
+        fields = ['first_name', 'last_name', 'username', 'email', 'phone', 'address']
     
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:

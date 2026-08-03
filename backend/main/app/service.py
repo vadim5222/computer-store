@@ -3,7 +3,7 @@ from .models import Product
 
 
 class ProductFilter(filters.FilterSet):
-    category = filters.CharFilter(field_name='category')
+    category = filters.CharFilter(field_name='category__title')
     price = filters.RangeFilter(field_name='price')
 
     class Meta:

@@ -1,4 +1,4 @@
-from .seralizers import UserSerializer, CategorySerializer, ManufacturerSerializer, ProductSerializer, ReviewSerializer
+from .seralizers import UserSerializer, CategorySerializer, ManufacturerSerializer, ProductSerializer, ReviewSerializer, CustomUserSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -11,7 +11,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework_simplejwt.exceptions import TokenError
 from django_filters.rest_framework import DjangoFilterBackend
 from .service import ProductFilter
-
+from rest_framework import generics
 
 
 
@@ -139,9 +139,6 @@ class LogoutView(APIView):
 
 
 
-
-
-
 # логика для профиля пользователя
 class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
@@ -150,7 +147,7 @@ class UserProfileView(APIView):
         return Response({'data':serializer.data})
     def patch(self, request, pk):
         user = Users.objects.get(pk=pk)
-        serializer = UserSerializer(user, data=request.data, partial=True)
+        serializer = CustomUserSerializer(user, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response({'data':serializer.data}, status=status.HTTP_200_OK)
@@ -199,25 +196,6 @@ class ManufacturerView(APIView):
             return Response({"data":serializer.data}, status=status.HTTP_201_CREATED)
         return Response({'error':serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
     
-
-# Логика просмотра и создания продуктов
-class ProductView(APIView):
-    parser_classes = [MultiPartParser, FormParser]
-    permission_classes = [IsAuthenticated]
-    filter_backends = (DjangoFilterBackend,)
-    filterset_class = ProductFilter
-
-    def get(self, request):
-        products = Product.objects.all()
-        serializer = ProductSerializer(products, many=True)
-        return Response({"data":serializer.data}, status=status.HTTP_200_OK)
-    def post(self, request):
-        serializer = ProductSerializer(data = request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({'data': serializer.data}, status=status.HTTP_201_CREATED)
-        return Response({'error': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
-
 # Логика просмиотра и создания отзывов
 class ReviewView(APIView):
     def post(self, request):
@@ -230,3 +208,15 @@ class ReviewView(APIView):
         reviews = Review.objects.all()
         serializer = ReviewSerializer(reviews, many=True)
         return Response({'data':serializer.data}, status=status.HTTP_200_OK)
+
+
+
+# =====================================ЛОГИКА РАБОТЫ С ПРОДУКТАМИ
+class ProductList(generics.ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = ProductFilter
+
+
+
