@@ -151,19 +151,7 @@ class UserProfileView(APIView):
             return Response({'data':serializer.data}, status=status.HTTP_200_OK)
         return Response({'error':serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
         
-1
-# логика для админки
-# class AdminView(APIView):
-#     permission_classes = [IsAdminUser]
-#     def get(self, request):
-#         users = Users.objects.all()
-#         categories = Category.objects.all()
-#         manufacturers = Manufacturer.objects.all()
-#         serializer_users = UserSerializer(users, many=True)
-#         serializer_categories = CategorySerializer(categories, many=True)
-#         serializer_manufacturers = ManufacturerSerializer(manufacturers, many=True)
-#         return Response(serializer_users.data, serializer_categories.data, serializer_manufacturers.data)
-    
+
 
     
 

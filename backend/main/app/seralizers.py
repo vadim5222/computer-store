@@ -7,7 +7,7 @@ class UserSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only = True)
     class Meta:
         model = Users
-        fields = ['id','first_name', 'last_name', 'username', 'email', 'phone', 'address', 'password1', 'password2']
+        fields = ['id','first_name', 'last_name', 'username', 'email', 'phone', 'address', 'password1', 'password2', 'is_superuser']
 
     def validate(self, attrs):
         if attrs['password1'] != attrs['password2']:
