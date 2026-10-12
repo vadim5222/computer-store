@@ -23,21 +23,21 @@ const AdminPage = () => {
 
     // функции для загрузки данных
     const categoryAdded = () => {
-        AxiosRequest.get('api/category/')
+        AxiosRequest.get('category/category/')
             .then(res => setCategories(res.data.data))
             .catch(() => setCategories([]))
     }
 
 
     const manufacturerAdded = () => {
-        AxiosRequest.get('api/manufacturer/')
+        AxiosRequest.get('category/manufacturer/')
             .then(res => setManufacturers(res.data.data))
             .catch(() => setManufacturers([]))
     }
 
     const productsAdded = () => {
-        AxiosRequest.get('api/products/')
-            .then(res => setProducts(res.data.data))
+        AxiosRequest.get('category/products/')
+            .then(res => setProducts(res.data))
             .catch(() => setProducts([]))
     }
 

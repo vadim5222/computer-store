@@ -6,7 +6,7 @@ const useAuthStore = create((set) => ({
 
     fetchUser: async () => {
         try{
-            const response = await AxiosRequest.get('api/profile/')
+            const response = await AxiosRequest.get('users/profile/')
             set({user:await response.data.data})
         }catch{
             set({user:null})
@@ -15,7 +15,7 @@ const useAuthStore = create((set) => ({
 
   logout: async () => {
         try{
-            await AxiosRequest.post('api/logout/')
+            await AxiosRequest.post('users/logout/')
           set({ user: null })
         }catch(error){
             console.error('Ошибка выхода:', error)

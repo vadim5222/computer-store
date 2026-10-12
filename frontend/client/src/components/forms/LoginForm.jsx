@@ -15,7 +15,7 @@ const LoginForm = () => {
 
     const loginUser = async(data) => {
         try{
-            const response = await AxiosRequest.post('api/login/', {
+            const response = await AxiosRequest.post('users/login/', {
                 username:data.username,
                 password:data.password
             })

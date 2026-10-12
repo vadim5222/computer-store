@@ -12,13 +12,13 @@ const ProductForm = ({onProductAdded}) => {
 
 
     useEffect(() => {
-        AxiosRequest.get('api/category/')
+        AxiosRequest.get('category/category/')
         .then(res => setCategories(res.data.data))
         .catch(() => setCategories([]))
     }, [])
 
     useEffect(() => {
-        AxiosRequest.get('api/manufacturer/')
+        AxiosRequest.get('category/manufacturer/')
         .then(res => setManufacturers(res.data.data))
         .catch(() => setManufacturers([]))
     }, [])
@@ -34,7 +34,7 @@ const ProductForm = ({onProductAdded}) => {
             formData.append('category',data.category)
             formData.append('manufacturer',data.manufacturer)
             formData.append('price',data.price)
-            const response = await AxiosRequest.post('api/products/',
+            const response = await AxiosRequest.post('category/products/',
                 formData
             )
             console.log(response)

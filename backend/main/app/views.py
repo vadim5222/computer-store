@@ -1,4 +1,4 @@
-from .seralizers import UserSerializer, CategorySerializer, ManufacturerSerializer, ProductSerializer, ReviewSerializer, CustomUserSerializer
+from .seralizers import UserSerializer, CustomUserSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -6,12 +6,10 @@ from rest_framework.views import APIView
 from django.conf import settings
 from django.contrib.auth import authenticate
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
-from .models import Users, Category, Manufacturer, Product, Review
-from rest_framework.parsers import MultiPartParser, FormParser
+from .models import Users
 from rest_framework_simplejwt.exceptions import TokenError
-from django_filters.rest_framework import DjangoFilterBackend
-from .service import ProductFilter
-from rest_framework import generics
+
+
 
 
 
@@ -155,68 +153,27 @@ class UserProfileView(APIView):
         
 1
 # логика для админки
-class AdminView(APIView):
-    permission_classes = [IsAdminUser]
-    def get(self, request):
-        users = Users.objects.all()
-        categories = Category.objects.all()
-        manufacturers = Manufacturer.objects.all()
-        serializer_users = UserSerializer(users, many=True)
-        serializer_categories = CategorySerializer(categories, many=True)
-        serializer_manufacturers = ManufacturerSerializer(manufacturers, many=True)
-        return Response(serializer_users.data, serializer_categories.data, serializer_manufacturers.data)
-    
-# логика для создания категории продукта
-class CategoryView(APIView):
-    def get(self, request):
-        categories = Category.objects.all()
-        serializer = CategorySerializer(categories, many=True)
-        return Response({'data':serializer.data})
-    def post(self, request):
-        serializer = CategorySerializer(data = request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({'data':serializer.data}, status=status.HTTP_201_CREATED)
-        return Response({'error':serializer.errors})
+# class AdminView(APIView):
+#     permission_classes = [IsAdminUser]
+#     def get(self, request):
+#         users = Users.objects.all()
+#         categories = Category.objects.all()
+#         manufacturers = Manufacturer.objects.all()
+#         serializer_users = UserSerializer(users, many=True)
+#         serializer_categories = CategorySerializer(categories, many=True)
+#         serializer_manufacturers = ManufacturerSerializer(manufacturers, many=True)
+#         return Response(serializer_users.data, serializer_categories.data, serializer_manufacturers.data)
     
 
-# логина создания производителей 
-class ManufacturerView(APIView):
-    parser_classes = [MultiPartParser, FormParser]
-
-    def get(self, request):
-        manufacturers = Manufacturer.objects.all()
-        serializer = ManufacturerSerializer(manufacturers, many=True)
-        return Response({'data':serializer.data})
     
-    def post(self, request):
-        serializer = ManufacturerSerializer(data = request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"data":serializer.data}, status=status.HTTP_201_CREATED)
-        return Response({'error':serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+
     
-# Логика просмиотра и создания отзывов
-class ReviewView(APIView):
-    def post(self, request):
-        serializer = ReviewSerializer(data = request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({'data':serializer.data}, status=status.HTTP_201_CREATED)
-        return Response({'error':serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
-    def get(self, request):
-        reviews = Review.objects.all()
-        serializer = ReviewSerializer(reviews, many=True)
-        return Response({'data':serializer.data}, status=status.HTTP_200_OK)
 
 
 
-# =====================================ЛОГИКА РАБОТЫ С ПРОДУКТАМИ
-class ProductList(generics.ListAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
-    filter_backends = (DjangoFilterBackend,)
-    filterset_class = ProductFilter
+
+
 
 
 

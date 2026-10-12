@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Users, Category, Manufacturer, Product, Review
+from .models import Users
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -33,34 +33,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
         model = Users
         fields = ['first_name', 'last_name', 'username', 'email', 'phone', 'address']
     
-class CategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Category
-        fields = ['title', 'created_at']
 
 
-class ManufacturerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Manufacturer
-        fields = ['title', 'description', 'image', 'created_at']
-
-    
-class ProductSerializer(serializers.ModelSerializer):
-    category = serializers.SlugRelatedField(
-        queryset = Category.objects.all(),
-        slug_field = 'title'
-    )
-    manufacturer = serializers.SlugRelatedField(
-        queryset = Manufacturer.objects.all(),
-        slug_field = 'title'
-    )
-    class Meta:
-        model = Product
-        fields = ['title', 'full_description', 'short_description', 'image' ,'category', 'manufacturer', 'price', 'created_at']
 
 
-class ReviewSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Review
-        fields = ['user', 'text', 'score', 'created_at']
-    

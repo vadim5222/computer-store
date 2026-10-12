@@ -15,7 +15,7 @@ const ManufacturerForm = ({onManufacturerAdded}) => {
             formData.append('title', data.title)
             formData.append('description', data.description)
             formData.append('image', selectedImage)
-            const response = await AxiosRequest.post('api/manufacturer/', 
+            const response = await AxiosRequest.post('category/manufacturer/', 
                 formData
             )
             console.log(response)
