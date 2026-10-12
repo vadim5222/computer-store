@@ -12,7 +12,7 @@ const RegisterForm = () => {
 
   const registerUser = async (data) => {
     try {
-      const response = await AxiosRequest.post('api/register/', {
+      const response = await AxiosRequest.post('users/register/', {
         first_name: data.first_name,
         last_name: data.last_name,
         username: data.username,

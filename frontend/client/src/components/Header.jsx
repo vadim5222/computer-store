@@ -18,7 +18,8 @@ const Header = () => {
                     <Link>Desktop PCs</Link>
                     <Link>Networking Devices</Link>
                     <Link>PC Parts</Link>
-                    {user?.is_superuser && <Link to='/admin-page/'>Админ-панель</Link>}
+                    {user.is_superuser &&
+                        <Link to='/admin-page/'>Админ-панель</Link>}
                 </ul>
             </nav>
             <div className='flex items-center gap-3'>
