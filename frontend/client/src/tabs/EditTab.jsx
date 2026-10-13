@@ -9,7 +9,7 @@ import AxiosRequest from "../utils/AxiosRequest";
 const EditTab = () => {
     const [user, setUser] = useState(null)
     useEffect(() => {
-        AxiosRequest.get('api/profile/')
+        AxiosRequest.get('users/profile/')
             .then(res => setUser(res.data.data))
             .catch(() => setUser(null))
     }, [])

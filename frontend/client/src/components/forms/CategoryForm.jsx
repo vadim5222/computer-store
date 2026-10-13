@@ -3,19 +3,19 @@ import AxiosRequest from "../../utils/AxiosRequest"
 import Label from "../ui/Label"
 import Input from "../ui/Input"
 
-const CategoryForm = ({onCategoryAdded}) => {
+const CategoryForm = ({fetchCategories}) => {
 
     const {register, handleSubmit, reset} = useForm()
 
     const createCategory = async(data) => {
         try{
-            const response = await AxiosRequest.post('api/category/', {
+            const response = await AxiosRequest.post('catalog/category/', {
                 title:data.title
             })
             console.log(response)
             reset()
-            if (onCategoryAdded){
-                onCategoryAdded()
+            if (fetchCategories){
+                fetchCategories()
             }
         }catch(e){
             console.log(e)
@@ -24,7 +24,7 @@ const CategoryForm = ({onCategoryAdded}) => {
 
     return(
         <>
-        <form onCategoryAdded={onCategoryAdded} onSubmit={handleSubmit(createCategory)}>
+        <form fetchCategories={fetchCategories} onSubmit={handleSubmit(createCategory)}>
             <Label htmlFor={'tite'}/>
             <Input type={'text'} placeholder={'Title'} {...register('title')}/>
             <button type="submit">Добавить</button>

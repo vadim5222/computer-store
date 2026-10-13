@@ -4,24 +4,25 @@ import { useState, useEffect } from 'react'
 import Input from '../ui/Input'
 
 
-const ProductForm = ({onProductAdded}) => {
+import useCategoryStore from '../../store/CategoryStore'
+import useManufacturerStore from '../../store/ManufacturerStore'
+
+
+const ProductForm = ({fetchProducts}) => {
     const {register, handleSubmit, reset} = useForm()
     const [selectedImage, setSelectedImage] = useState(null)
-    const [categories, setCategories] = useState([])
-    const [manufacturers, setManufacturers] = useState([])
+
+    const {categories, fetchCategories} = useCategoryStore()
+    const {manufacturers, fetchManufacturer} = useManufacturerStore()
 
 
     useEffect(() => {
-        AxiosRequest.get('category/category/')
-        .then(res => setCategories(res.data.data))
-        .catch(() => setCategories([]))
+        fetchCategories(),
+        fetchManufacturer()
     }, [])
 
-    useEffect(() => {
-        AxiosRequest.get('category/manufacturer/')
-        .then(res => setManufacturers(res.data.data))
-        .catch(() => setManufacturers([]))
-    }, [])
+
+
 
 
     const createProduct = async(data) => {
@@ -51,7 +52,7 @@ const ProductForm = ({onProductAdded}) => {
 
     return(
         <>
-        <form onProductAdded={onProductAdded} onSubmit={handleSubmit(createProduct)}>
+        <form fetchProducts={fetchProducts} onSubmit={handleSubmit(createProduct)}>
             <Input type={'text'} placeholder={'title'} {...register('title')}/>
             <Input type={'text'} placeholder={'full_description'} {...register('full_description')}/>
             <Input type={'text'} placeholder={'short_description'} {...register('short_description')}/>

@@ -1,11 +1,18 @@
 import { useState, useEffect } from "react"
+
 import CategoryForm from "../components/forms/CategoryForm"
-import AxiosRequest from "../utils/AxiosRequest"
 import ManufacturerForm from "../components/forms/ManufacturerForm"
 import ProductForm from "../components/forms/ProductForm"
+
+
 import ProductCard from "../components/ui/ProductCard"
+
+
 import { IoIosAdd } from "react-icons/io";
 
+import useCategoryStore from "../store/CategoryStore"
+import useManufacturerStore from "../store/ManufacturerStore"
+import useProductStore from "../store/ProductStore"
 
 
 const AdminPage = () => {
@@ -15,42 +22,22 @@ const AdminPage = () => {
     const [viewProductForm, setViewProductForm] = useState(false)
 
 
-    // состояния для получения
-    const [categories, setCategories] = useState([])
-    const [manufacturers, setManufacturers] = useState([])
-    const [products, setProducts] = useState([])
+    const {categories, fetchCategories} = useCategoryStore()
+    const {manufacturers, fetchManufacturer} = useManufacturerStore()
+    const {products, fetchProducts} = useProductStore()
+    
 
-
-    // функции для загрузки данных
-    const categoryAdded = () => {
-        AxiosRequest.get('category/category/')
-            .then(res => setCategories(res.data.data))
-            .catch(() => setCategories([]))
-    }
-
-
-    const manufacturerAdded = () => {
-        AxiosRequest.get('category/manufacturer/')
-            .then(res => setManufacturers(res.data.data))
-            .catch(() => setManufacturers([]))
-    }
-
-    const productsAdded = () => {
-        AxiosRequest.get('category/products/')
-            .then(res => setProducts(res.data))
-            .catch(() => setProducts([]))
-    }
 
     useEffect(() => {
-        categoryAdded()
-        manufacturerAdded()
-        productsAdded()
+        fetchCategories()
+        fetchManufacturer()
+        fetchProducts()
     }, [])
 
     return (
         <div className="container mx-auto">
-            {viewManufacturerForm && <ManufacturerForm onManufacturerAdded={manufacturerAdded} />}
-            {viewProductForm && <ProductForm onProductAdded={productsAdded} />}
+            {viewManufacturerForm && <ManufacturerForm fetchManufacturer={fetchManufacturer} />}
+            {viewProductForm && <ProductForm fetchProducts={fetchProducts} />}
 
 
             <div className="grid grid-cols-2">
@@ -74,12 +61,11 @@ const AdminPage = () => {
                             {categories.map(category => (
                                 <tr key={category.id}>
                                     <td className="px-6 py-4">{category.title}</td>
-                                    <td className="px-6 py-4">{categories.length}</td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
-                    {viewCategoryForm && <CategoryForm onCategoryAdded={categoryAdded} />}
+                    {viewCategoryForm && <CategoryForm fetchCategories={fetchCategories} />}
                 </div>
 
                 <div className="shadow-xl p-4 col-span-1">
@@ -111,7 +97,7 @@ const AdminPage = () => {
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">{manufacturer.description}</td>
-                                    <td className="px-6 py-4">{manufacturers.length}</td>
+                                    <td className="px-6 py-4">{manufacturer.length}</td>
                                 </tr>
                             ))}
                         </tbody>
@@ -142,7 +128,7 @@ const AdminPage = () => {
                                 <tr key={product.title}>
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-6">
-                                            <img src={product.image} alt="avatar" />
+                                            <img src={product.image} alt="avatar" className="w-56"/>
                                             <p>{product.title}</p>
                                         </div>
                                     </td>

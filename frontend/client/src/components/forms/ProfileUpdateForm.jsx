@@ -8,7 +8,7 @@ const ProfileUpdateForm = ({ userId }) => {
     const { register, handleSubmit, reset } = useForm()
 
     useEffect(() => {
-        AxiosRequest.get('api/profile/')
+        AxiosRequest.get('users/profile/')
             .then(res => reset(res.data.data))
             .catch((err) => console.log('Ошибка загрузки:', err))
     }, [])
@@ -22,7 +22,7 @@ const ProfileUpdateForm = ({ userId }) => {
                     formData.append(key, value)
                 }
             })
-            const response = await AxiosRequest.patch(`api/update/${userId}/`, formData)
+            const response = await AxiosRequest.patch(`users/update/${userId}/`, formData)
             console.log(response)
         } catch (error) {
             console.error('Ошибка при обновлении:', error)

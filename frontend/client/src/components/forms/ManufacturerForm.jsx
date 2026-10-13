@@ -5,7 +5,7 @@ import Input from '../ui/Input'
 import { useState } from 'react'
 
 
-const ManufacturerForm = ({onManufacturerAdded}) => {
+const ManufacturerForm = ({fetchManufacturer}) => {
     const {register, handleSubmit, reset} = useForm()
     const [selectedImage, setSelectedImage] = useState(null)
 
@@ -15,14 +15,14 @@ const ManufacturerForm = ({onManufacturerAdded}) => {
             formData.append('title', data.title)
             formData.append('description', data.description)
             formData.append('image', selectedImage)
-            const response = await AxiosRequest.post('category/manufacturer/', 
+            const response = await AxiosRequest.post('catalog/manufacturer/', 
                 formData
             )
             console.log(response)
             setSelectedImage(null)
             reset()
-            if (onManufacturerAdded){
-                onManufacturerAdded()
+            if (fetchManufacturer){
+                fetchManufacturer()
             }
         }catch(e){
             console.log(e)
@@ -31,7 +31,7 @@ const ManufacturerForm = ({onManufacturerAdded}) => {
 
     return(
         <>
-        <form onManufacturerAdded={onManufacturerAdded} onSubmit={handleSubmit(createManufacturer)}>
+        <form fetchManufacturer={fetchManufacturer} onSubmit={handleSubmit(createManufacturer)}>
             <Label htmlFor={'title'} value={'Title'}/>
             <Input type={'text'} placeholder={'title'} {...register('title')}/>
 
