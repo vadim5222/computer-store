@@ -53,7 +53,6 @@ const AdminPage = () => {
                         <thead>
                             <tr>
                                 <th className="px-6 py-4">Название</th>
-                                <th className="px-6 py-4">Количество товаров</th>
                                 <th className="px-6 py-4">Действие</th>
                             </tr>
                         </thead>
@@ -81,7 +80,6 @@ const AdminPage = () => {
                             <tr>
                                 <th className="px-6 py-4">Название</th>
                                 <th className="px-6 py-4">Описание</th>
-                                <th className="px-6 py-4">Количество товаров</th>
                                 <th className="px-6 py-4">Действие</th>
                             </tr>
                         </thead>
@@ -89,8 +87,8 @@ const AdminPage = () => {
                             {manufacturers.map(manufacturer => (
                                 <tr key={manufacturer.id}>
                                     <td className="px-6 py-4">
-                                        <div className="flex items-center gap-6">
-                                            <img src={manufacturer.image} alt="avatar" />
+                                        <div className="flex items-center flex-col gap-2">
+                                            <img src={`http://localhost:8000/${manufacturer.image}`} alt="avatar" />
                                             <p>
                                                 {manufacturer.title}
                                             </p>
@@ -127,15 +125,15 @@ const AdminPage = () => {
                             {products.map(product => (
                                 <tr key={product.title}>
                                     <td className="px-6 py-4">
-                                        <div className="flex items-center gap-6">
-                                            <img src={product.image} alt="avatar" className="w-56"/>
+                                        <div className="flex items-center flex-col gap-6">
+                                            <img src={product.image} alt="avatar" className="w-2xl"/>
                                             <p>{product.title}</p>
                                         </div>
                                     </td>
-                                    <td className="px-6 py-4">{product.full_description}</td>
+                                    <td className="px-6 py-4 w-lg line-clamp-6">{product.full_description}</td>
                                     <td className="px-6 py-4">{product.short_description}</td>
                                     <td className="px-6 py-4">{product.category}</td>
-                                    <td className="px-6 py-4">{product.manufacturer}</td>
+                                    <td className="px-6 py-4 text-center">{product.manufacturer}</td>
                                     <td className="px-6 py-4">{product.price}</td>
                                 </tr>
                             ))}

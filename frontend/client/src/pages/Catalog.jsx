@@ -1,15 +1,14 @@
 import ProductCard from "../components/ui/ProductCard"
-import AxiosRequest from "../utils/AxiosRequest"
-import { useState, useEffect } from "react"
+import useProductStore from "../store/ProductStore"
+import { useEffect } from "react"
 
 
 const Catalog = () => {
-    const [products, setProducts] = useState([])
+
+    const {products, fetchProducts} = useProductStore()
 
     useEffect(() => {
-        AxiosRequest.get('api/products/')
-            .then(res => setProducts(res.data))
-            .catch(() => setProducts([]))
+        fetchProducts()
     }, [])
 
     return (
