@@ -8,6 +8,7 @@ const useProductStore = create((set) => ({
             try{
                 const response = await AxiosRequest.get('catalog/products/')
                 set({products: await response.data})
+                console.log(response)
             }catch{
                 set({products: []})
             }

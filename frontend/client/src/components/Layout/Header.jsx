@@ -44,6 +44,9 @@ const Header = () => {
             <header className='container m-auto p-8 '>
                 <div className='flex justify-between items-center'>
                     {user ? appRouter : authRouter}
+                    <div>
+                        <img src="/shopping-cart.png" alt="shopping-cart" />
+                    </div>
                 </div>
             </header>
         </div>

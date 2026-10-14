@@ -14,7 +14,7 @@ const ProductCard = ({ image, title, full_description, short_description, catego
                 <p>{manufacturer}</p>
             </div>
             <p className="mb-3">{price}</p>
-            <button className="bg-blue-600 text-white p-2 rounded-md">
+            <button className="bg-blue-600 text-white p-2 rounded-md cursor-pointer">
                 Добавить в корзину
             </button>
         </div>

@@ -7,6 +7,7 @@ const Catalog = () => {
 
     const {products, fetchProducts} = useProductStore()
 
+
     useEffect(() => {
         fetchProducts()
     }, [])

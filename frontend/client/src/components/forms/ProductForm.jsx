@@ -35,7 +35,7 @@ const ProductForm = ({fetchProducts}) => {
             formData.append('category',data.category)
             formData.append('manufacturer',data.manufacturer)
             formData.append('price',data.price)
-            const response = await AxiosRequest.post('category/products/',
+            const response = await AxiosRequest.post('catalog/products/',
                 formData
             )
             console.log(response)

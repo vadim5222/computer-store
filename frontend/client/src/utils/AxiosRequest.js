@@ -24,7 +24,7 @@ AxiosRequest.interceptors.response.use((config) => {
   if (error.response?.status === 401 && !originalRequest._isRetry) {
     originalRequest._isRetry = true
     try{
-      const response = await axios.post(`${baseUrl}api/refresh/`, {}, {
+      const response = await axios.post(`${baseUrl}users/refresh/`, {}, {
         withCredentials: true
       })
       console.log(response)
