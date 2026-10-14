@@ -14,8 +14,5 @@ class CartItem(models.Model):
     quantity = models.PositiveIntegerField()
     price = models.DecimalField(max_digits=12, decimal_places=2)
 
-    class Meta:
-        unique_together = ('cart', 'product')
-
     def __str__(self):
         return f'{self.cart.user}'
