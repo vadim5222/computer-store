@@ -12,7 +12,7 @@ import OrdersTab from './tabs/OrdersTab'
 import EditTab from './tabs/EditTab'
 import ReviewTab from './tabs/ReviewTab'
 import FavoriteTab from './tabs/FavoriteTab'
-import Basket from './components/ui/basket'
+
 function App() {
   return (
     <>
