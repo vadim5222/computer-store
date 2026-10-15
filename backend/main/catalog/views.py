@@ -1,13 +1,22 @@
 from django.shortcuts import render
+from django.core.cache import cache
+
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.views import APIView
+
+
 from .models import Manufacturer, Category, Product
 from .serializer import ManufacturerSerializer, ProductSerializer, CategorySerializer
+from .service import ProductFilter
+
+
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
+
+
 from django_filters.rest_framework import DjangoFilterBackend
-from .service import ProductFilter
+
 
 
 class ManufacturerView(APIView):
@@ -41,12 +50,8 @@ class CategoryView(APIView):
 
 
 # =====================================ЛОГИКА РАБОТЫ С ПРОДУКТАМИ
-class ProductList(generics.ListAPIView):
+class ProductListCreateAPIView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = ProductFilter
-
-class ProductCreateAPIView(generics.CreateAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
