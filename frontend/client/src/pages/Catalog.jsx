@@ -1,11 +1,12 @@
 import ProductCard from "../components/ui/ProductCard"
 import useProductStore from "../store/ProductStore"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import Basket from "../components/ui/Basket"
 
 
 const Catalog = () => {
 
-    const {products, fetchProducts} = useProductStore()
+    const { products, fetchProducts } = useProductStore()
 
 
     useEffect(() => {
@@ -15,11 +16,6 @@ const Catalog = () => {
     return (
         <div className="container mx-auto">
             <h1 className="font-bold text-3xl">Каталог товаров</h1>
-            <div>
-                <button>
-                    
-                </button>
-            </div>
 
             <div className="flex items-center gap-16 flex-wrap">
                 {products.map(product => (

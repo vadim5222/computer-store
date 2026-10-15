@@ -12,6 +12,7 @@ import OrdersTab from './tabs/OrdersTab'
 import EditTab from './tabs/EditTab'
 import ReviewTab from './tabs/ReviewTab'
 import FavoriteTab from './tabs/FavoriteTab'
+import Basket from './components/ui/Basket'
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path='/register' element={<RegisterPage />} />
           <Route path='/admin-page' element={<Layout><AdminPage /></Layout>} />
           <Route path='/catalog' element={<Layout><Catalog /></Layout>} />
+          <Route path='/cart' element={<Layout><Basket/></Layout>} />
           <Route path='/profile/' element={<Layout><Profile /></Layout>}>
             <Route index element={<MainTab />} />
             <Route path='main/edit' element={<EditTab />} />

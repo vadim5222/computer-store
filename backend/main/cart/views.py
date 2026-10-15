@@ -19,12 +19,6 @@ class CartItemAPIView(APIView):
         serializer = CartItemSerializer(cart, many=True)
         total_quantity = CartItemService.get_total_quantity(user=request.user)
         total_price = CartItemService.get_total_price(user=request.user)
-        return Response({
-            'data': {
-                'items': serializer.data,
-                'total_quantity': total_quantity,
-                'total_price': total_price
-            }
-        })
+        return Response({'data':serializer.data})
 
         

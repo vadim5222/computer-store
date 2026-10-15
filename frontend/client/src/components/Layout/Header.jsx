@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import useAuthStore from '../../store/AuthStore'
 
 const Header = () => {
@@ -40,16 +40,15 @@ const Header = () => {
     )
 
     return (
+        <>
         <div className='border border-r-0 border-l-0 border-t-0 border-b-gray-400'>
             <header className='container m-auto p-8 '>
                 <div className='flex justify-between items-center'>
                     {user ? appRouter : authRouter}
-                    <div>
-                        <img src="/shopping-cart.png" alt="shopping-cart" />
-                    </div>
                 </div>
             </header>
         </div>
+        </>
     )
 }
 
