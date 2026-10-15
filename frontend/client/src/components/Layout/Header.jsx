@@ -41,13 +41,16 @@ const Header = () => {
 
     return (
         <>
-        <div className='border border-r-0 border-l-0 border-t-0 border-b-gray-400'>
-            <header className='container m-auto p-8 '>
-                <div className='flex justify-between items-center'>
-                    {user ? appRouter : authRouter}
-                </div>
-            </header>
-        </div>
+            <div className='border border-r-0 border-l-0 border-t-0 border-b-gray-400'>
+                <header className='container m-auto p-8 '>
+                    <div className='flex justify-between items-center'>
+                        {user ? appRouter : authRouter}
+                        <Link to='/cart/'>
+                            <img src="/shopping-cart.png" alt="" />
+                        </Link>
+                    </div>
+                </header>
+            </div>
         </>
     )
 }

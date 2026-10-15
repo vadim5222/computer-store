@@ -1,7 +1,8 @@
 import AxiosRequest from "../../utils/AxiosRequest"
 
 
-const ProductCard = ({ image, title, full_description, short_description, category, manufacturer, price }) => {
+const ProductCard = ({ image, title, full_description, short_description, category, manufacturer, price, addToCart }) => {
+
     return (
         <div className="border border-black p-1.5 rounded-md max-h-1/3">
             <div className="flex justify-center">
@@ -14,7 +15,7 @@ const ProductCard = ({ image, title, full_description, short_description, catego
                 <p>{manufacturer}</p>
             </div>
             <p className="mb-3">{price}</p>
-            <button className="bg-blue-600 text-white p-2 rounded-md cursor-pointer">
+            <button className="bg-blue-600 text-white p-2 rounded-md cursor-pointer" onClick={addToCart}>
                 Добавить в корзину
             </button>
         </div>

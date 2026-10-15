@@ -2,6 +2,7 @@ import ProductCard from "../components/ui/ProductCard"
 import useProductStore from "../store/ProductStore"
 import { useEffect, useState } from "react"
 import Basket from "../components/ui/Basket"
+import AxiosRequest from "../utils/AxiosRequest"
 
 
 const Catalog = () => {
@@ -12,6 +13,19 @@ const Catalog = () => {
     useEffect(() => {
         fetchProducts()
     }, [])
+
+    const addToCart = async () => {
+        try{
+            const response = await AxiosRequest.post('/cart/cart-item/', {
+                'id': products.id,
+                'cart': products.cart,
+                'product': products.products
+            }) 
+        }catch(e){
+            console.error(e)
+        }
+    }
+
 
     return (
         <div className="container mx-auto">
@@ -27,6 +41,7 @@ const Catalog = () => {
                         category={product.category}
                         manufacturer={product.manufacturer}
                         price={product.price}
+                        // addToCart={}
                     />
                 ))}
             </div>
