@@ -46,7 +46,7 @@ const Header = () => {
                     <div className='flex justify-between items-center'>
                         {user ? appRouter : authRouter}
                         <Link to='/cart/'>
-                            <img src="/shopping-cart.png" alt="" />
+                            <img src="/shopping-cart.jpg" alt="" />
                         </Link>
                     </div>
                 </header>

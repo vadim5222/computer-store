@@ -1,30 +1,37 @@
 import ProductCard from "../components/ui/ProductCard"
 import useProductStore from "../store/ProductStore"
 import { useEffect, useState } from "react"
-import Basket from "../components/ui/Basket"
 import AxiosRequest from "../utils/AxiosRequest"
-
+import useCartStore from "../store/useCartStore"
+import AuthStore from '../store/AuthStore'
 
 const Catalog = () => {
 
     const { products, fetchProducts } = useProductStore()
+    const {cart, fetchCart} = useCartStore()
+    const {user, fetchUser} = AuthStore()
 
 
     useEffect(() => {
         fetchProducts()
+        fetchCart()
+        fetchUser()
     }, [])
 
-    const addToCart = async () => {
+    const addToCart = async (product) => {
         try{
             const response = await AxiosRequest.post('/cart/cart-item/', {
-                'id': products.id,
-                'cart': products.cart,
-                'product': products.products
+                'cart': user.username,
+                'product': product.title, 
+                'quantity': 1,
+                'price': product.price
             }) 
+            console.log(response)
         }catch(e){
             console.error(e)
         }
     }
+
 
 
     return (
@@ -41,7 +48,7 @@ const Catalog = () => {
                         category={product.category}
                         manufacturer={product.manufacturer}
                         price={product.price}
-                        // addToCart={}
+                        addToCart={() => addToCart(product)}
                     />
                 ))}
             </div>
