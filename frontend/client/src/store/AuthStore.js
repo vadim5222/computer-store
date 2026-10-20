@@ -13,7 +13,7 @@ const useAuthStore = create((set) => ({
         }
     },
 
-  logout: async () => {
+  logout: async (navigate) => {
         try{
             await AxiosRequest.post('users/logout/')
           set({ user: null })
