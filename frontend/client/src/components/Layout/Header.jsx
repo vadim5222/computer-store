@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import useAuthStore from '../../store/AuthStore'
+import { useNavigate } from 'react-router-dom'
 
 const Header = () => {
     const { user, fetchUser, logout } = useAuthStore()
+    const navigate = useNavigate()
 
     useEffect(() => {
         fetchUser()
@@ -23,7 +25,7 @@ const Header = () => {
             </nav>
             <div className='flex items-center gap-3'>
                 <Link to='/profile/'>{user?.username}</Link>
-                <button onClick={logout}>Выйти</button>
+                <button onClick={() => logout(navigate('/login'))}>Выйти</button>
             </div>
         </div>
     )
