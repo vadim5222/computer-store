@@ -7,4 +7,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD [ "python", "app/main/manage.py", "runserver" ]
+CMD [ "python", "backend/main/manage.py", "runserver" ]
