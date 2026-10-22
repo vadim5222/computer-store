@@ -1,3 +1,4 @@
+from django.core.cache import cache
 from django.shortcuts import render
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, status
@@ -17,6 +18,7 @@ class ManufacturerView(APIView):
         manufacturers = Manufacturer.objects.all()
         serializer = ManufacturerSerializer(manufacturers, many=True)
         return Response({"data": serializer.data})
+
     def post(self, request):
         serializer = ManufacturerSerializer(data=request.data)
         if serializer.is_valid():
@@ -47,3 +49,13 @@ class ProductListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = ProductSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = ProductFilter
+
+    def list(self, request, *args, **kwargs):
+        cache_key = f"catalog_{request.get_full_path()}"
+        data = cache.get(cache_key)
+        if data is None:
+            response = super().list(request, *args, **kwargs)
+            data = response.data
+            cache.set(cache_key, data, timeout=600)
+        response = Response(data)
+        return response
